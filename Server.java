@@ -11,6 +11,7 @@ public class Server extends Thread {
 	private static final int PORT = 9999;
 	private static final int NO_PLAYERS = 0;
 	private static final int MAX_PLAYERS = 4;
+	private static final long JOIN_TIME = 15000;
 	
 	
 	private ServerSocket server;
@@ -31,8 +32,10 @@ public class Server extends Thread {
 	
 	public void run() {
 		
+		long timePassed = 0;
+		long startTime = System.currentTimeMillis();
 		int connectedClients=0;
-		while (true && connectedClients<MAX_PLAYERS) {
+		while (timePassed<=JOIN_TIME && connectedClients<=MAX_PLAYERS /*&& connectedClients>=MIN_PLAYERS*/) {
 			try {
 				Socket client = server.accept();
 				System.out.println(client.getInetAddress().toString());
